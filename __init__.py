@@ -12,7 +12,8 @@ metrics_df = pd.DataFrame(columns=[
     'median',
     'variance',
     'kurtosis',
-    'skewness'
+    'skewness',
+    'freq_radius'
 ])
 
 for component in components:
@@ -25,7 +26,8 @@ for component in components:
         img_stats['median'],
         img_stats['variance'],
         img_stats['kurtosis'],
-        img_stats['skewness']
+        img_stats['skewness'],
+        img_stats['freq_radius']
     ]
 
 metrics_df.to_csv('data/metrics.csv', index=False)
