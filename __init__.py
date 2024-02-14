@@ -1,13 +1,13 @@
 from auxiliar_functions import get_color_components, get_stats
 from PIL import Image
 import pandas as pd
+import os
 
-im = Image.open('data/images/example.jpg')
-components = get_color_components(im)
+directory = os.fsencode('data/images')
 
 metrics_df = pd.DataFrame(columns=[
     'filename',
-    'tissue_type',
+    'healthy',
     'color_component',
     'median',
     'variance',
@@ -16,18 +16,27 @@ metrics_df = pd.DataFrame(columns=[
     'freq_radius'
 ])
 
-for component in components:
-    img_stats = get_stats(components[component])
+for file in os.listdir(directory):
+    filename = os.fsdecode(file)
+    print(filename)
     
-    metrics_df.loc[len(metrics_df)] = [
-        "example.jpg",
-        "healthy",
-        component,
-        img_stats['median'],
-        img_stats['variance'],
-        img_stats['kurtosis'],
-        img_stats['skewness'],
-        img_stats['freq_radius']
-    ]
+    healthy = "saudavel" in filename
+
+    im = Image.open('data/images/' + filename)
+    components = get_color_components(im)
+
+    for component in components:
+        img_stats = get_stats(components[component])
+        
+        metrics_df.loc[len(metrics_df)] = [
+            filename,
+            healthy,
+            component,
+            img_stats['median'],
+            img_stats['variance'],
+            img_stats['kurtosis'],
+            img_stats['skewness'],
+            img_stats['freq_radius']
+        ]
 
 metrics_df.to_csv('data/metrics.csv', index=False)
