@@ -3,7 +3,10 @@ from PIL import Image
 import pandas as pd
 import os
 
-directory = os.fsencode('data/images')
+DATA_FOLDER = "../data"
+IMAGES_FOLDER = DATA_FOLDER + '/images'
+
+directory = os.fsencode(IMAGES_FOLDER)
 
 metrics_df = pd.DataFrame(columns=[
     'filename',
@@ -22,7 +25,7 @@ for file in os.listdir(directory):
     
     healthy = "saudavel" in filename
 
-    im = Image.open('data/images/' + filename)
+    im = Image.open(IMAGES_FOLDER + '/' + filename)
     components = get_color_components(im)
 
     for component in components:
@@ -39,4 +42,4 @@ for file in os.listdir(directory):
             img_stats['freq_radius']
         ]
 
-metrics_df.to_csv('data/metrics.csv', index=False)
+metrics_df.to_csv(DATA_FOLDER + '/metrics.csv', index=False)
