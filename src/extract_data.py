@@ -23,7 +23,7 @@ for file in os.listdir(directory):
     filename = os.fsdecode(file)
     print(filename)
     
-    healthy = "saudavel" in filename
+    healthy = "Saudavel" in filename
 
     im = Image.open(IMAGES_FOLDER + '/' + filename)
     components = get_color_components(im)

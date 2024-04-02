@@ -1,6 +1,7 @@
 import pandas as pd
 import scipy
 import numpy as np
+import matplotlib.pyplot as plt
 
 DATA_FOLDER = "../data"
 
@@ -21,6 +22,15 @@ for component in components:
     for metric in metrics:
         healthy = healthy_component[metric].to_numpy()
         fibrosis = fibrosis_component[metric].to_numpy()
+
+        data = [healthy, fibrosis]
+        fig, ax = plt.subplots()
+        ax.boxplot(data)
+        ax.set_xticklabels(["Saudavel", "Fibrose"])
+        plt.title(component + " - " + metric)
+        plt.savefig(DATA_FOLDER + "/boxplots/" + component + " - " + metric + ".png")
+        plt.close()
+
         rs = scipy.stats.ranksums(healthy, fibrosis)
         analysis_df.loc[len(analysis_df)] = [
             component,
@@ -31,5 +41,6 @@ for component in components:
 
 
 analysis_df.to_csv(DATA_FOLDER + '/analysis.csv', index=False)
+analysis_df.to_excel(DATA_FOLDER + '/Analysis.xlsx')
 
 
