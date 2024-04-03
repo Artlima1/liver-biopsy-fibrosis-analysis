@@ -45,7 +45,7 @@ def get_radius(image):
     rad = 0
 
     while sum < half_tot:
-        rad += 10
+        rad += 1
         sum = sum_values_inside_circle(mag, rad)
 
     return rad
