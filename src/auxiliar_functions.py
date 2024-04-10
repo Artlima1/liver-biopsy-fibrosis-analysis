@@ -84,3 +84,27 @@ def extract_central_half(img):
     cropped_img = img.crop((left, top, right, bottom))
     
     return cropped_img
+
+def split_image(original_image):
+    # Open the image
+    original_width, original_height = original_image.size
+    
+    # Calculate the width and height of each sub-image
+    sub_width = original_width // 3
+    sub_height = original_height // 3
+    
+    sub_images = []
+    
+    # Loop through each row and column to extract sub-images
+    for y in range(3):
+        for x in range(3):
+            left = x * sub_width
+            upper = y * sub_height
+            right = left + sub_width
+            lower = upper + sub_height
+            
+            # Crop the sub-image
+            sub_image = original_image.crop((left, upper, right, lower))
+            sub_images.append(sub_image)
+    
+    return sub_images

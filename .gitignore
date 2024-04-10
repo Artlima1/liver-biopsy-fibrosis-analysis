@@ -2,7 +2,7 @@
 __pycache__/
 
 # Environments
-dip
+env
 
 # Data Contained inside folder
 data/*

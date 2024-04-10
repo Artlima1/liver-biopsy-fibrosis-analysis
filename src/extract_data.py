@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 DATA_FOLDER = "../data"
-IMAGES_FOLDER = DATA_FOLDER + '/images'
+IMAGES_FOLDER = DATA_FOLDER + '/split_images'
 
 directory = os.fsencode(IMAGES_FOLDER)
 
