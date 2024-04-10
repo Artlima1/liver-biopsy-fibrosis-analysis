@@ -70,3 +70,17 @@ def get_stats(im):
     }
 
 
+def extract_central_half(img):    
+    # Get dimensions of the image
+    width, height = img.size
+    
+    # Calculate the bounding box for the central half
+    left = width // 4
+    top = height // 4
+    right = 3 * width // 4
+    bottom = 3 * height // 4
+    
+    # Crop the image using the bounding box
+    cropped_img = img.crop((left, top, right, bottom))
+    
+    return cropped_img

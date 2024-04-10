@@ -1,4 +1,4 @@
-from auxiliar_functions import get_color_components, get_stats
+from auxiliar_functions import get_color_components, get_stats, extract_central_half
 from PIL import Image
 import pandas as pd
 import os
@@ -26,7 +26,10 @@ for file in os.listdir(directory):
     healthy = "Saudavel" in filename
 
     im = Image.open(IMAGES_FOLDER + '/' + filename)
-    components = get_color_components(im)
+
+    im_cropped = extract_central_half(im)
+
+    components = get_color_components(im_cropped)
 
     for component in components:
         img_stats = get_stats(components[component])
