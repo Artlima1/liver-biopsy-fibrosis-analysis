@@ -3,6 +3,7 @@ __pycache__/
 
 # Environments
 env
+class
 
 # Data Contained inside folder
 data/*

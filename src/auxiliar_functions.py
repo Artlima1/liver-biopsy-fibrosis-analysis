@@ -6,7 +6,7 @@ def get_color_components(im):
     R, G, B = im.split()
     H, S, V = im.convert("HSV").split()
     C, M, Y, K = im.convert("CMYK").split()
-    Y, Cb, Cr = im.convert("YCbCr").split()
+    Y_prime, Cb, Cr = im.convert("YCbCr").split()
     L, a, b = im.convert("LAB").split()
 
     components = {
@@ -19,6 +19,7 @@ def get_color_components(im):
         "C": C,
         "M": M,
         "Y": Y,
+        "Y'": Y_prime,
         "Cb": Cb,
         "Cr": Cr,
         "L": L,

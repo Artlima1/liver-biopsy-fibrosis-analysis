@@ -1,10 +1,10 @@
-from auxiliar_functions import get_color_components, get_stats, extract_central_half
+from auxiliar_functions import get_color_components, get_stats
 from PIL import Image
 import pandas as pd
 import os
 
 DATA_FOLDER = "../data"
-IMAGES_FOLDER = DATA_FOLDER + '/split_images'
+IMAGES_FOLDER = DATA_FOLDER + '/images'
 
 directory = os.fsencode(IMAGES_FOLDER)
 
@@ -27,9 +27,7 @@ for file in os.listdir(directory):
 
     im = Image.open(IMAGES_FOLDER + '/' + filename)
 
-    im_cropped = extract_central_half(im)
-
-    components = get_color_components(im_cropped)
+    components = get_color_components(im)
 
     for component in components:
         img_stats = get_stats(components[component])
