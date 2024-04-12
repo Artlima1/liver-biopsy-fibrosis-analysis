@@ -8,5 +8,6 @@ class
 # Data Contained inside folder
 data/*
 
-# Prototyping folder
+# Prototyping 
+*.ipynb
 tests

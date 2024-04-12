@@ -1,4 +1,4 @@
-from auxiliar_functions import get_color_components, get_stats
+import auxiliar_functions as aux
 from PIL import Image
 import pandas as pd
 import os
@@ -7,40 +7,23 @@ DATA_FOLDER = "../data"
 IMAGES_FOLDER = DATA_FOLDER + '/images'
 
 directory = os.fsencode(IMAGES_FOLDER)
-
-metrics_df = pd.DataFrame(columns=[
-    'filename',
-    'healthy',
-    'color_component',
-    'median',
-    'variance',
-    'kurtosis',
-    'skewness',
-    'freq_radius'
-])
+data = []
 
 for file in os.listdir(directory):
     filename = os.fsdecode(file)
     print(filename)
-    
+
     healthy = "Saudavel" in filename
 
     im = Image.open(IMAGES_FOLDER + '/' + filename)
 
-    components = get_color_components(im)
+    components = aux.get_color_components(im)
 
+    i = len(data)
+    data.insert(i, {"filename": filename, "healthy": healthy})
     for component in components:
-        img_stats = get_stats(components[component])
+        img_stats = aux.get_stats(components[component], component)
+        data[i].update(img_stats)
         
-        metrics_df.loc[len(metrics_df)] = [
-            filename,
-            healthy,
-            component,
-            img_stats['median'],
-            img_stats['variance'],
-            img_stats['kurtosis'],
-            img_stats['skewness'],
-            img_stats['freq_radius']
-        ]
-
+metrics_df = pd.DataFrame(data)
 metrics_df.to_csv(DATA_FOLDER + '/metrics.csv', index=False)

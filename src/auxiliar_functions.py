@@ -1,6 +1,7 @@
 from PIL import ImageStat
 import scipy
 import numpy as np
+import matplotlib.pyplot as plt
 
 def get_color_components(im):
     R, G, B = im.split()
@@ -51,7 +52,7 @@ def get_radius(image):
 
     return rad
 
-def get_stats(im):
+def get_stats(im, component):
     intensities = list(im.getdata())
 
     stats = ImageStat.Stat(im)
@@ -63,11 +64,11 @@ def get_stats(im):
     rad = get_radius(im)
     
     return {
-        "median": median,
-        "variance": variance,
-        "kurtosis": kurtosis,
-        "skewness": skewness,
-        "freq_radius": rad
+        f"{component}_median": median,
+        f"{component}_variance": variance,
+        f"{component}_kurtosis": kurtosis,
+        f"{component}_skewness": skewness,
+        f"{component}_freq_radius": rad
     }
 
 
@@ -109,3 +110,30 @@ def split_image(original_image):
             sub_images.append(sub_image)
     
     return sub_images
+
+def plot_fft_side_by_side(im1, im2):
+    np1 = np.asarray(im1)
+    ft1 = scipy.fft.fft2(np1)
+    ft1 = scipy.fft.fftshift(ft1)
+    mag1 = np.abs(ft1)
+
+    np2 = np.asarray(im2)
+    ft2 = scipy.fft.fft2(np2)
+    ft2 = scipy.fft.fftshift(ft2)
+    mag2 = np.abs(ft2)
+
+    plt.subplot(121)
+    plt.axis('off')
+    plt.imshow(np.log(im1), cmap='gray')
+
+    plt.subplot(122)
+    plt.axis('off')
+    plt.imshow(np.log(im2), cmap='gray')
+
+def plot_boxplot(healthy, fibrosis, metric, folder):
+    fig, ax = plt.subplots()
+    ax.boxplot([healthy, fibrosis])
+    ax.set_xticklabels(["Saudavel", "Fibrose"])
+    plt.title(f"{metric}")
+    plt.savefig(f"{folder}/boxplots/{metric}.png")
+    plt.close()
