@@ -26,6 +26,7 @@ for file in os.listdir(directory):
     healthy = "Saudavel" in filename
 
     im = Image.open(IMAGES_FOLDER + '/' + filename)
+
     components = get_color_components(im)
 
     for component in components:

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 DATA_FOLDER = "../data"
 
-components = ["R","G","B","H","S","V","C","M","Y","Cb","Cr","L","a","b"]
+components = ["R","G","B","H","S","V","C","M","Y", "Y'","Cb","Cr","L","a","b"]
 metrics = ["median","variance","kurtosis","skewness","freq_radius"]
 
 metrics_df = pd.read_csv('../data/metrics.csv')
