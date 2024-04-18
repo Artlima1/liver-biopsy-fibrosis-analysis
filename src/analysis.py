@@ -18,7 +18,7 @@ for metric in metrics:
     
     aux.plot_boxplot(healthy, fibrosis, metric, DATA_FOLDER)
 
-    rs = scipy.stats.ranksums(healthy, fibrosis)
+    rs = scipy.stats.wilcoxon(healthy, fibrosis)
     analysis.insert(len(analysis),{
         "metric": metric,
         "statistic": rs.statistic,
