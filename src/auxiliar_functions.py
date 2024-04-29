@@ -43,6 +43,7 @@ def get_radius(image):
     mag = np.abs(ft)
 
     half_tot = np.sum(mag)/2
+    
     sum = 0
     rad = 0
 
