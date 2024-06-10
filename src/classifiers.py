@@ -3,6 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 pd.options.mode.copy_on_write = True
 
@@ -30,10 +32,15 @@ y = dataset["healthy"].astype(int)
 lr = LogisticRegression()
 lc = LinearSVC(dual="auto")
 knn = KNeighborsClassifier()
+nb = GaussianNB()
+dt = DecisionTreeClassifier(criterion='gini', max_depth=5)
+
 
 lr_acc_avg = 0
 lc_acc_avg = 0
 knn_acc_avg = 0
+nb_acc_avg = 0
+dt_acc_avg = 0
 
 # Average accuracy in 20 random training sets
 for i in range(N_TRAINING_SETS):
@@ -49,24 +56,36 @@ for i in range(N_TRAINING_SETS):
     lc_y_pred = lc.predict(X_test)
     lc_acc = accuracy_score(y_test, lc_y_pred)
 
-    # K-Means Clustering
+    # K-nearest neighboors
     knn.fit(X_train, y_train)
     knn_y_pred = knn.predict(X_test)
     knn_acc = accuracy_score(y_test, knn_y_pred)
 
-    # print(f"{i}) LR: {lr_acc:.3f}")
-    # print(f"{i}) SVM: {lc_acc:.3f}")
-    # print(f"{i}) KNN: {knn_acc:.3f}")
+    # Naive Bayes
+    nb.fit(X_train, y_train)
+    nb_y_pred = nb.predict(X_test)
+    nb_acc = accuracy_score(y_test, nb_y_pred)
+
+    # Decision Tree
+    dt.fit(X_train, y_train)
+    dt_y_pred = dt.predict(X_test)
+    dt_acc = accuracy_score(y_test, dt_y_pred)
 
     lr_acc_avg += lr_acc
     lc_acc_avg += lc_acc
     knn_acc_avg += knn_acc
+    nb_acc_avg += nb_acc
+    dt_acc_avg += dt_acc
 
 
 lr_acc_avg /= N_TRAINING_SETS
 lc_acc_avg /= N_TRAINING_SETS
 knn_acc_avg /= N_TRAINING_SETS
+nb_acc_avg /= N_TRAINING_SETS
+dt_acc_avg /= N_TRAINING_SETS
 
 print(f"LR Average: {lr_acc_avg:.3f}")
 print(f"SVM Average: {lc_acc_avg:.3f}")
 print(f"KNN Average: {knn_acc_avg:.3f}")
+print(f"NB Average: {nb_acc_avg:.3f}")
+print(f"DT Average: {dt_acc_avg:.3f}")
